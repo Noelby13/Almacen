@@ -20,6 +20,7 @@ DProducto producto = new DProducto();
     public FrmVerProducto() {
         initComponents();
         tablaProductoMovimiento.setModel(producto.tablaInventario());
+        tablaProductoMovimiento.setDefaultEditor(Object.class, null);
     }
 
     /**

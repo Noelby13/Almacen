@@ -26,6 +26,7 @@ DCliente listaC;
         initComponents();
         this.listaC=listaC;
         tablaCliente.setModel(listaC.tablaClienteMovimiento());
+        tablaCliente.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -187,8 +188,9 @@ DCliente listaC;
         // TODO add your handling code here:
       int idCliente = Integer.parseInt(TfCliente.getText());
       listaC.editarCliente(TfNombre.getText(), TfRuc.getText());
-      JOptionPane.showMessageDialog(this, "Cliente editado");
       
+      JOptionPane.showMessageDialog(this, "Cliente editado.");
+      tablaCliente.setModel(listaC.tablaClienteMovimiento());
       TfCliente.setText("");
       TfRuc.setText("");
       TfNombre.setText("");
@@ -199,9 +201,8 @@ DCliente listaC;
     private void tablaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClienteMouseClicked
         // TODO add your handling code here:
        int fila = tablaCliente.getSelectedRow();
-       int columna = tablaCliente.getSelectedColumn();
        
-       int id =(int) tablaCliente.getValueAt(fila, columna);
+       int id =(int) tablaCliente.getValueAt(fila, 0);
        String idC =  String.valueOf(id);
        TfCliente.setText(idC);
        

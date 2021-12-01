@@ -31,6 +31,7 @@ DSalida salida = new DSalida ();
         this.entrada=entrada;
         this.salida= salida;
         initComponents();
+        tablaProducto.setDefaultEditor(Object.class, null);
         
     }
     
@@ -134,6 +135,7 @@ DSalida salida = new DSalida ();
         
         if (eleccion.equalsIgnoreCase("Inventario")){
             tablaProducto.setModel(producto.tablaInventario());
+            
         }else if(eleccion.equalsIgnoreCase("Entradas")){
             tablaProducto.setModel(entrada.tablaEntrada());
         }else if(eleccion.equalsIgnoreCase("Salidas")){

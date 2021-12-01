@@ -24,6 +24,7 @@ DUsuario listaU;
         initComponents();
         this.listaU=listaU;
         tablaUsuario.setModel(listaU.tablaUsuario());
+        tablaUsuario.setDefaultEditor(Object.class, null);
     }
 
     /**

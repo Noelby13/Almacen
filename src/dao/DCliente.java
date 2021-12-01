@@ -93,6 +93,7 @@ public class DCliente {
     
     public DefaultTableModel tablaClienteMovimiento(){
         DefaultTableModel tblModelo = new DefaultTableModel();
+        
           try{
             String titulo [] ={
                 "id",

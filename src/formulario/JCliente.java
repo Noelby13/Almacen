@@ -21,6 +21,7 @@ DCliente listaC;
         this.listaC=listaC;
         initComponents();
         TablaCliente.setModel(listaC.tablaClienteMovimiento());
+        TablaCliente.setDefaultEditor(Object.class, null);
         
     }
 

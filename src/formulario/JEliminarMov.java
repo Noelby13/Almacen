@@ -32,6 +32,7 @@ private DSalida listaS;
         this.listaS=listaS;
         initComponents();
         tablaMov.setModel(listaE.tablaEntrada());
+        tablaMov.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -89,6 +90,11 @@ private DSalida listaS;
 
             }
         ));
+        tablaMov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMovMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaMov);
 
         jButton1.setText("Eliminar");
@@ -173,9 +179,11 @@ private DSalida listaS;
             Producto P = listaE.obtenerProducto(id);
             listaP.editarProducto(P, cantidad);
             listaE.eliminarEntrada(id);
-            JOptionPane.showMessageDialog(this, "Entrada eliminada e Inventario actualizado");
-            TfId.setText("");
+            //tabla no se actualiza hasta que se actualice la BD, esto se debe a que solo se realiza eliminacion logica.
             tablaMov.setModel(listaE.tablaEntrada());
+            JOptionPane.showMessageDialog(this, "Entrada eliminada e Inventario actualizado, cambios se reflejaran despues de actualizar");
+            TfId.setText("");
+            
             
         }else{
             cantidad =listaS.obtenerCantidadSalida(id);
@@ -184,6 +192,7 @@ private DSalida listaS;
             listaS.eliminarSalida(id);
             JOptionPane.showMessageDialog(this, "Salida eliminada e Inventario actualizado");
             TfId.setText("");
+            //tabla no se actualiza hasta que se actualice la BD, esto se debe a que solo se realiza eliminacion logica.
             tablaMov.setModel(listaS.tablaSalida());
         }
             
@@ -198,6 +207,14 @@ private DSalida listaS;
             tablaMov.setModel(listaS.tablaSalida());
         }
     }//GEN-LAST:event_comboEleccionActionPerformed
+
+    private void tablaMovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMovMouseClicked
+        // TODO add your handling code here:
+       int fila = tablaMov.getSelectedRow();
+       int id =(int) tablaMov.getValueAt(fila, 0);
+       String ids = String.valueOf(id);
+       TfId.setText(ids);
+    }//GEN-LAST:event_tablaMovMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

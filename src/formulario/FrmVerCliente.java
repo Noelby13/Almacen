@@ -19,6 +19,7 @@ DCliente cliente = new DCliente();
     public FrmVerCliente() {
         initComponents();
         tablaClienteMovimiento.setModel(cliente.tablaClienteMovimiento());
+        tablaClienteMovimiento.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -49,6 +50,7 @@ DCliente cliente = new DCliente();
 
             }
         ));
+        tablaClienteMovimiento.setFocusable(false);
         jScrollPane1.setViewportView(tablaClienteMovimiento);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
@@ -91,7 +93,8 @@ DCliente cliente = new DCliente();
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
