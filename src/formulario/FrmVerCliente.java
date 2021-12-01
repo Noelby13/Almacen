@@ -12,14 +12,21 @@ import dao.DCliente;
  * @author Noel
  */
 public class FrmVerCliente extends javax.swing.JFrame {
-DCliente cliente = new DCliente();
+private DCliente cliente;
     /**
      * Creates new form FrmVerCliente
      */
-    public FrmVerCliente() {
+    public FrmVerCliente(DCliente cliente) {
+        this.cliente=cliente;
         initComponents();
         tablaClienteMovimiento.setModel(cliente.tablaClienteMovimiento());
         tablaClienteMovimiento.setDefaultEditor(Object.class, null);
+    }
+    
+     public FrmVerCliente() {
+       
+        initComponents();
+        
     }
 
     /**

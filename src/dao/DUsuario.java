@@ -24,7 +24,7 @@ public class DUsuario {
     private PreparedStatement editarUsuario;
     private PreparedStatement eliminarUsuario;
     private PreparedStatement mostrarUsuario;
-    private static ArrayList <Usuario> listaUsuario= new ArrayList();
+    private ArrayList <Usuario> listaUsuario= new ArrayList();
 
     public DUsuario() {
         try{

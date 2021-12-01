@@ -24,7 +24,7 @@ public class DCliente {
     private PreparedStatement editarCliente;
     private PreparedStatement eliminarCliente;
     private PreparedStatement mostrarCliente;
-    private static ArrayList <Cliente> listaCliente = new ArrayList();
+    private ArrayList <Cliente> listaCliente = new ArrayList();
 
     public DCliente() {
         try{

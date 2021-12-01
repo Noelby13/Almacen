@@ -27,15 +27,15 @@ public class JMovimiento extends javax.swing.JPanel {
 //DEntrada listaE =new DEntrada();
 //DSalida listaS = new DSalida();
 //DCliente listaC = new DCliente();
-DProducto listaP;
-DEntrada listaE;
-DSalida listaS;
-DCliente listaC;        
-Date Fecha = new Date();
+private DProducto listaP;
+private DEntrada listaE;
+private DSalida listaS;
+private DCliente listaC;        
+private Date Fecha = new Date();
 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 String formattedDate = simpleDateFormat.format(Fecha);
 java.sql.Date fechaSql = java.sql.Date.valueOf(formattedDate);
-Usuario user;
+private Usuario user;
 
     /**
      * Creates new form JMovimiento
@@ -303,13 +303,13 @@ Usuario user;
 
     private void btnClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseClicked
         // TODO add your handling code here:
-        FrmVerCliente gui = new FrmVerCliente();
+        FrmVerCliente gui = new FrmVerCliente(listaC);
         gui.setVisible(true);
     }//GEN-LAST:event_btnClienteMouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        FrmVerProducto gui = new FrmVerProducto();
+        FrmVerProducto gui = new FrmVerProducto(listaP);
         gui.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 

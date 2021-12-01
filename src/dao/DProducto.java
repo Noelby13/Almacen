@@ -26,7 +26,7 @@ public class DProducto {
     private PreparedStatement editarProducto;
     private PreparedStatement eliminarProducto;
     private PreparedStatement mostrarProducto;
-    private static  ArrayList<Producto> listaProducto = new ArrayList();
+    private  ArrayList<Producto> listaProducto = new ArrayList();
 
     public DProducto() {
         try{
@@ -386,7 +386,7 @@ public class DProducto {
        return msn;
    }
    
-    public static ArrayList<Producto> getListaProducto() {
+    public ArrayList<Producto> getListaProducto() {
          return listaProducto;
      }
            

@@ -13,11 +13,17 @@ import dao.DProducto;
  * @author Noel
  */
 public class FrmVerProducto extends javax.swing.JFrame {
-DProducto producto = new DProducto();
+    private DProducto producto;
     /**
      * Creates new form FrmVerCliente
      */
     public FrmVerProducto() {
+        initComponents();
+
+    }
+    
+    public FrmVerProducto(DProducto producto) {
+        this.producto=producto;
         initComponents();
         tablaProductoMovimiento.setModel(producto.tablaInventario());
         tablaProductoMovimiento.setDefaultEditor(Object.class, null);

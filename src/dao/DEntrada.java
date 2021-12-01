@@ -27,11 +27,13 @@ public class DEntrada {
     private PreparedStatement editarEntrada;
     private PreparedStatement eliminarEntrada;
     private PreparedStatement mostrarEntrada;
-    private static ArrayList <Entrada> listaEntrada = new ArrayList();
-    DProducto p = new DProducto();
-    DUsuario user = new DUsuario();
+    private  ArrayList <Entrada> listaEntrada = new ArrayList();
+    private DProducto p;
+    private DUsuario user;
 
-    public DEntrada() {
+    public DEntrada(DProducto p, DUsuario user) {
+        this.p=p;
+        this.user=user;
         try{
             conn = conexion.obtenerConexion();
             

@@ -17,9 +17,9 @@ import javax.swing.JOptionPane;
  * @author Noel
  */
 public class JReportes extends javax.swing.JPanel {
-DProducto producto = new DProducto ();
-DEntrada entrada = new DEntrada();
-DSalida salida = new DSalida ();
+    private DProducto producto;
+    private DEntrada entrada;
+    private DSalida salida;
 
     
     

@@ -23,21 +23,21 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  * @author Noel
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-private DProducto listaP = new DProducto();
-private DEntrada listaE =new DEntrada();
-private DSalida listaS = new DSalida();
-private DCliente listaC = new DCliente();
-private DUsuario listaU = new DUsuario();
-private JMovimiento mov;
-private JInfoUsuario infoUser;
-private JProducto producto;
-private JCliente cliente;
-private JReportes reporte;
-private JEliminarMov eliminarMov;
-private JEditarCliente eliminarCliente;
-private JVerUsuario verUsuario;
-private JAgregarUsuario agregarUsuario;
-Usuario user;
+    private DProducto listaP = new DProducto();
+    private DEntrada listaE;
+    private DSalida listaS;
+    private DCliente listaC = new DCliente();
+    private DUsuario listaU = new DUsuario();
+    private JMovimiento mov;
+    private JInfoUsuario infoUser;
+    private JProducto producto;
+    private JCliente cliente;
+    private JReportes reporte;
+    private JEliminarMov eliminarMov;
+    private JEditarCliente eliminarCliente;
+    private JVerUsuario verUsuario;
+    private JAgregarUsuario agregarUsuario;
+    private Usuario user;
 
 
     /**
@@ -52,6 +52,8 @@ Usuario user;
         initComponents();
         setLocationRelativeTo(null);
         this.user=user;
+        listaE=new DEntrada(listaP,listaU);
+        listaS=new DSalida(listaP, listaC, listaU);
         mov = new JMovimiento(this.user,listaE, listaS, listaP, listaC);
         infoUser = new JInfoUsuario(user, listaU);
         producto = new JProducto(listaP, listaE, user);

@@ -29,12 +29,15 @@ public class DSalida {
     private PreparedStatement editarSalida;
     private PreparedStatement eliminarSalida;
     private PreparedStatement mostrarSalida;
-    private static ArrayList <Salida> listaSalida = new ArrayList();
-    DProducto p = new DProducto();
-    DCliente cliente = new DCliente();
-    DUsuario user = new DUsuario();
+    private  ArrayList <Salida> listaSalida = new ArrayList();
+    private DProducto p;
+    private DCliente cliente;
+    private DUsuario user;
 
-    public DSalida() {
+    public DSalida(DProducto p, DCliente cliente, DUsuario user) {
+        this.p=p;
+        this.cliente=cliente;
+        this.user=user;
         try{
             conn = conexion.obtenerConexion();
             
