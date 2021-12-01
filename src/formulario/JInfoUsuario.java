@@ -7,18 +7,29 @@ package formulario;
 
 import dao.DUsuario;
 import javax.swing.JOptionPane;
+import modelado.Usuario;
 
 /**
  *
  * @author Noel
  */
-public class JUsuario extends javax.swing.JPanel {
-DUsuario listaU = new DUsuario ();
+public class JInfoUsuario extends javax.swing.JPanel {
+Usuario user;
+DUsuario listaU;
     /**
      * Creates new form JUsuario
      */
-    public JUsuario() {
+    public JInfoUsuario() {
         initComponents();
+    }
+    
+    public JInfoUsuario(Usuario user, DUsuario listaU) {
+        initComponents();
+        this.user=user;
+        this.listaU= listaU;
+        TfNombreUsuario.setText(user.getNombreUsuario());
+        TfNombreUsuario.setEnabled(false);
+        
     }
 
     /**
@@ -33,59 +44,57 @@ DUsuario listaU = new DUsuario ();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         TfNombreUsuario = new javax.swing.JTextField();
-        TfNombre = new javax.swing.JTextField();
         TfContraseña = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
-        comboEleccion = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        TfContraseñaNueva = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jPanel1.setBackground(new java.awt.Color(236, 239, 244));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Agregar usuario");
+        jLabel1.setText("Cambiar contraseña.");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre de usuario:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Nombre:");
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Contraseña:");
+        jLabel5.setText("Contraseña actual:");
 
         TfNombreUsuario.setBackground(new java.awt.Color(236, 239, 244));
         TfNombreUsuario.setForeground(new java.awt.Color(0, 0, 0));
         TfNombreUsuario.setBorder(null);
 
-        TfNombre.setBackground(new java.awt.Color(236, 239, 244));
-        TfNombre.setBorder(null);
-
         TfContraseña.setBackground(new java.awt.Color(236, 239, 244));
         TfContraseña.setForeground(new java.awt.Color(0, 0, 0));
         TfContraseña.setBorder(null);
 
-        jButton1.setText("Guardar");
+        jButton1.setText("Cambiar contraseña.");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        comboEleccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Bodeguero" }));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Contraseña nueva:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Rol");
+        TfContraseñaNueva.setBackground(new java.awt.Color(236, 239, 244));
+        TfContraseñaNueva.setForeground(new java.awt.Color(0, 0, 0));
+        TfContraseñaNueva.setBorder(null);
+        TfContraseñaNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TfContraseñaNuevaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,23 +106,20 @@ DUsuario listaU = new DUsuario ();
                     .addComponent(jButton1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator4)
-                            .addComponent(TfNombre)
-                            .addComponent(TfContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                            .addComponent(jSeparator2)
-                            .addComponent(jSeparator1)
-                            .addComponent(TfNombreUsuario)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboEleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(223, Short.MAX_VALUE))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSeparator4)
+                                .addComponent(TfContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                                .addComponent(jSeparator1)
+                                .addComponent(TfNombreUsuario)
+                                .addComponent(TfContraseñaNueva, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,25 +132,21 @@ DUsuario listaU = new DUsuario ();
                     .addComponent(TfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(TfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
-                    .addComponent(TfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(TfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboEleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(23, 23, 23)
+                    .addComponent(jLabel6)
+                    .addComponent(TfContraseñaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -160,25 +162,37 @@ DUsuario listaU = new DUsuario ();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code he
         
-        
-        listaU.agregarUsuario(TfNombre.getText(), TfNombreUsuario.getText(), TfContraseña.getText(), comboEleccion.getSelectedItem().toString());
-        JOptionPane.showMessageDialog(this, "Usuario Guardado Exitosamente");
+    
+        if (listaU.autenticarUsuario(user.getNombreUsuario(), TfContraseña.getText())==1){
+            listaU.editarUsuario(user.getNombre(),TfNombreUsuario.getText(), TfContraseñaNueva.getText(),user.getPrivilegio());
+            JOptionPane.showMessageDialog(this, "Informacion Actualizada");
+            TfContraseña.setText("");
+            TfContraseñaNueva.setText("");
+        }else{
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+            TfContraseña.setText("");
+            TfContraseñaNueva.setText("");
+        }
+            
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void TfContraseñaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfContraseñaNuevaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TfContraseñaNuevaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TfContraseña;
-    private javax.swing.JTextField TfNombre;
+    private javax.swing.JTextField TfContraseñaNueva;
     private javax.swing.JTextField TfNombreUsuario;
-    private javax.swing.JComboBox<String> comboEleccion;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

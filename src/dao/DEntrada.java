@@ -72,7 +72,11 @@ public class DEntrada {
         return result;
         
     }
-        //tabla que manda al panel reporte cuando se seleciona inventario 
+    
+    /**
+     * Retorna DefaultaTableModel con todos los datos de "Entrada" de productos
+     * @return DefaultTableModel 
+     */
     public DefaultTableModel tablaEntrada(){
         DefaultTableModel tblModelo = new DefaultTableModel();
           try{
@@ -92,7 +96,7 @@ public class DEntrada {
               
                   
                   datos[0]= i.getId();
-                  datos[1]= i.getFecha();
+                  datos[1]= i.getFecha().toString();
                   datos[2]= i.getProducto().getNombre();
                   datos[3]= i.getCantidad();
                   datos[4]= i.getUsuario().getNombreUsuario();
@@ -107,6 +111,60 @@ public class DEntrada {
         }
         return tblModelo;
     }
+    /**Retorna la cantidad actual de un producto.
+     * 
+     * @param id
+     * @return int
+     */
+    public int obtenerCantidadEntrada(int id){
+        int cantidad =0;
+        try{
+            for (Entrada i: listaEntrada){
+                if(i.getId()==id){
+                    cantidad=i.getCantidad();
+                    return cantidad;
+                }
+            }
+            
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        
+        return cantidad;
+    }
+    /**Retorna un producto de una "Entrada"
+     * 
+     * @param id
+     * @return Producto
+     */
+        
+    public Producto obtenerProducto(int id){
+        Producto p= null;
+        try{
+            for (Entrada i: listaEntrada){
+                if(i.getId()==id){
+                    p=i.getProducto();
+                    return p;
+                }
+            }
+            
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+        
+        return p;
+    }
+    
+    /**
+     * Agregar Entrada al ArrayList
+     * @param fecha
+     * @param producto
+     * @param cantidad
+     * @param usuario
+     * @return int
+     * 1 = Satisfactorio.
+     * 0 = Error
+     */
     
     public int agregarEntrada (java.sql.Date fecha, Producto producto, int cantidad, Usuario usuario){
         int b = 0;
@@ -125,6 +183,14 @@ public class DEntrada {
         }
         return b;
     }
+    /**
+     * Edita una entrada 
+     * @param cantidad
+     * @param idEntrada
+     * @return int
+     * 1 = Satisfactorio.
+     * 0 = Error
+     */
     
     public int editarEntrada(int cantidad, int idEntrada){
         int b=0;
@@ -142,7 +208,13 @@ public class DEntrada {
         }
         return b;
     }
-    
+    /**
+     * Elimina una Entrada
+     * @param idEntrada
+     * @return int
+     * 1 = Satisfactorio.
+     * 0 = Error
+     */
     public int eliminarEntrada(int idEntrada){
         int b= 0;
         try{
@@ -158,11 +230,17 @@ public class DEntrada {
         }
         return b;
     }
-    
+    /**
+     * Agrega una Entrada en la base de datos.
+     * @param entrada
+     * @return int
+     * 1 = Satisfactorio.
+     * 0 = Error
+     */
    public int insertarEntradaBD(Entrada entrada){
        int result=0;
        try{
-           insertarEntrada.setDate(1, entrada.getFecha());
+           insertarEntrada.setDate(1, (java.sql.Date)entrada.getFecha());
            insertarEntrada.setString(2, entrada.getProducto().getCodigoBarra());
            insertarEntrada.setInt(3, entrada.getCantidad());
            insertarEntrada.setInt(4, entrada.getUsuario().getId());
@@ -175,6 +253,13 @@ public class DEntrada {
        }
        return result;
    }
+   /**
+    * Edita una entrada en la Base de datos
+    * @param entrada
+    * @return int
+    * 1 = Satisfactorio.
+    * 0 = Error
+    */
    
    public int editarEntradaBD(Entrada entrada){
        int result =0;
@@ -191,6 +276,14 @@ public class DEntrada {
        return result;
    }
    
+   /**
+    * Elimina una entrada de la base de datos.
+    * @param entrada
+    * @return int
+    * 1 = Satisfactorio.
+     * 0 = Error
+    */
+   
    public int eliminarEntradaBD(Entrada entrada){
        int result = 0;
        try{
@@ -205,9 +298,14 @@ public class DEntrada {
        return result;
        
    }
-   
+   /**
+    * 
+    * @return String
+    * retorna mensaje sobre exito o Errores en el proceso de
+    * actualizar BD.
+    */
    public String actualizarBD(){
-       String msn="";
+       String msn="----Entradas----\n";
        String msnError = "Errores en :";
        int nuevos = 0, modificados = 0, eliminados = 0;
        int errorNuevos = 0, errorModificados = 0, errorEliminados = 0;
@@ -222,7 +320,7 @@ public class DEntrada {
                        modificados++;
                    }else{
                        errorModificados++;
-                       msnError+="\n -Error al modificar "+entrada.getId();
+                       msnError+="\n -Error al modificar"+entrada.getId();
                    }
                    break;
                case 3:
@@ -241,18 +339,21 @@ public class DEntrada {
                        errorNuevos++;
                        msnError +="\n Error al agregar"+entrada.getId();
                    }
+                   break;
                default:
                    msnError+="\n Revise el registro: "+ entrada.getId()
                            + " " + entrada.getProducto().getNombre();
                    break;
            }
        }
-       msn = "Registros guardados: " + nuevos + "\nRegistros editados: "+ modificados+
-                "\nRegistros eliminados: " + eliminados;
+       msn += "Entradas guardadas: " + nuevos + "\nEntradas editadas: "+ modificados+
+                "\nEntradas eliminadas: " + eliminados;
        
-       if (!msnError.equals("Errores en: ")){
-            msn+="\n"+ msnError;
-        } 
+       if (msnError.equals("Errores en: ")){
+            msn+="\n";
+        }else{
+           msn+="\n"+ msnError;
+       }
        listaEntrada = listarRegistro();
        return msn;
    }

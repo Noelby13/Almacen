@@ -6,6 +6,7 @@
 package proyectofinal;
 
 import dao.DUsuario;
+import formulario.FrmLogin;
 
 /**
  *
@@ -18,7 +19,8 @@ public class Principal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-  
+        FrmLogin login = new FrmLogin();
+        login.setVisible(true);
         
         
     }

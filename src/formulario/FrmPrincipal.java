@@ -28,22 +28,49 @@ private DEntrada listaE =new DEntrada();
 private DSalida listaS = new DSalida();
 private DCliente listaC = new DCliente();
 private DUsuario listaU = new DUsuario();
+private JMovimiento mov;
+private JInfoUsuario infoUser;
+private JProducto producto;
+private JCliente cliente;
+private JReportes reporte;
+private JDashboard db;
+private JEliminarMov eliminarMov;
+private JEditarCliente eliminarCliente;
+private JVerUsuario verUsuario;
+private JAgregarUsuario agregarUsuario;
 Usuario user;
+
 
     /**
      * Creates new form FrmPrincipal
      */
     public FrmPrincipal() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public FrmPrincipal(Usuario user){
         initComponents();
+        setLocationRelativeTo(null);
         this.user=user;
-        TfUser.setText(user.getNombreUsuario());
+        mov = new JMovimiento(this.user,listaE, listaS, listaP, listaC);
+        infoUser = new JInfoUsuario(user, listaU);
+        producto = new JProducto(listaP, listaE, user);
+        cliente = new JCliente (listaC);
+        reporte = new JReportes(listaP, listaE, listaS);
+        db = new JDashboard (listaC, listaU, listaP, listaS, listaE);
+        eliminarMov = new JEliminarMov(listaE, listaS, listaP);
+        eliminarCliente = new JEditarCliente(listaC);
+        verUsuario = new JVerUsuario(listaU);
+        agregarUsuario = new JAgregarUsuario(listaU);
+        if(this.user.getPrivilegio().equalsIgnoreCase("Administrador")){
+            panelUsuario.setVisible(false);
+        }else{
+            panelAdmin.setVisible(false);
+        }
+        TfUser.setText("Hola "+user.getNombreUsuario());
     }
      
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,66 +80,64 @@ Usuario user;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        backGround = new javax.swing.JPanel();
+        panelSuperior = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         TfUser = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        LDashboard = new javax.swing.JLabel();
+        panelAdmin = new javax.swing.JPanel();
         LProducto = new javax.swing.JLabel();
         LCliente = new javax.swing.JLabel();
         LUsuario = new javax.swing.JLabel();
-        LMovimientos = new javax.swing.JLabel();
+        LVerUsuario = new javax.swing.JLabel();
         LActualizarBD = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         LReportes1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        LEliminarMov = new javax.swing.JLabel();
+        LEliminarProducto2 = new javax.swing.JLabel();
+        LEliminarUsuario1 = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
+        panelUsuario = new javax.swing.JPanel();
+        LProducto1 = new javax.swing.JLabel();
+        LCliente1 = new javax.swing.JLabel();
+        LUsuario1 = new javax.swing.JLabel();
+        LMovimientos1 = new javax.swing.JLabel();
+        LActualizarBD1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        LReportes2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        backGround.setBackground(new java.awt.Color(204, 204, 204));
+        backGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(60, 141, 188));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelSuperior.setBackground(new java.awt.Color(60, 141, 188));
+        panelSuperior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/businessman.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(608, 0, 90, -1));
+        panelSuperior.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(608, 0, 90, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Almacen");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 14, -1, -1));
+        panelSuperior.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 14, -1, -1));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/warehouse.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
+        panelSuperior.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
 
         TfUser.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jPanel2.add(TfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(704, 18, 136, 46));
+        panelSuperior.add(TfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(704, 18, 136, 46));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 70));
+        backGround.add(panelSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 70));
 
-        jPanel3.setBackground(new java.awt.Color(34, 45, 49));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        LDashboard.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        LDashboard.setForeground(new java.awt.Color(255, 255, 255));
-        LDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_dashboard_40px_1.png"))); // NOI18N
-        LDashboard.setText("DASHBOARD");
-        LDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        LDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                LDashboardMousePressed(evt);
-            }
-        });
-        jPanel3.add(LDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 210, -1));
+        panelAdmin.setBackground(new java.awt.Color(34, 45, 49));
+        panelAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LProducto.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         LProducto.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,7 +150,7 @@ Usuario user;
                 LProductoMousePressed(evt);
             }
         });
-        jPanel3.add(LProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 156, 210, -1));
+        panelAdmin.add(LProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 210, -1));
 
         LCliente.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         LCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +163,7 @@ Usuario user;
                 LClienteMousePressed(evt);
             }
         });
-        jPanel3.add(LCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 208, 210, -1));
+        panelAdmin.add(LCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 210, -1));
 
         LUsuario.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         LUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,20 +176,20 @@ Usuario user;
                 LUsuarioMousePressed(evt);
             }
         });
-        jPanel3.add(LUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 266, 210, -1));
+        panelAdmin.add(LUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 210, -1));
 
-        LMovimientos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        LMovimientos.setForeground(new java.awt.Color(255, 255, 255));
-        LMovimientos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_shopping_cart_40px.png"))); // NOI18N
-        LMovimientos.setText("MOVIMIENTOS");
-        LMovimientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        LMovimientos.addMouseListener(new java.awt.event.MouseAdapter() {
+        LVerUsuario.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        LVerUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        LVerUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LVerUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_password_30px_1.png"))); // NOI18N
+        LVerUsuario.setText("VER USUARIOS");
+        LVerUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LVerUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                LMovimientosMousePressed(evt);
+                LVerUsuarioMousePressed(evt);
             }
         });
-        jPanel3.add(LMovimientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 98, 210, -1));
+        panelAdmin.add(LVerUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 140, -1));
 
         LActualizarBD.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         LActualizarBD.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,12 +202,12 @@ Usuario user;
                 LActualizarBDMousePressed(evt);
             }
         });
-        jPanel3.add(LActualizarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 210, -1));
+        panelAdmin.add(LActualizarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 210, -1));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Versión 1.0");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 528, -1, -1));
+        panelAdmin.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 528, -1, -1));
 
         LReportes1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         LReportes1.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,9 +220,63 @@ Usuario user;
                 LReportes1MousePressed(evt);
             }
         });
-        jPanel3.add(LReportes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
+        panelAdmin.add(LReportes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 210, -1));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, 550));
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_shopping_cart_40px.png"))); // NOI18N
+        jLabel4.setText("MOVIMIENTOS");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setMaximumSize(new java.awt.Dimension(171, 40));
+        jLabel4.setMinimumSize(new java.awt.Dimension(171, 40));
+        jLabel4.setPreferredSize(new java.awt.Dimension(171, 40));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel4MousePressed(evt);
+            }
+        });
+        panelAdmin.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, -1));
+
+        LEliminarMov.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        LEliminarMov.setForeground(new java.awt.Color(255, 255, 255));
+        LEliminarMov.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LEliminarMov.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_delete_30px.png"))); // NOI18N
+        LEliminarMov.setText("ELIMINAR MOVIMIENTOS");
+        LEliminarMov.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LEliminarMov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LEliminarMovMousePressed(evt);
+            }
+        });
+        panelAdmin.add(LEliminarMov, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 180, -1));
+
+        LEliminarProducto2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        LEliminarProducto2.setForeground(new java.awt.Color(255, 255, 255));
+        LEliminarProducto2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LEliminarProducto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_edit_30px_1.png"))); // NOI18N
+        LEliminarProducto2.setText("EDITAR CLIENTE");
+        LEliminarProducto2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LEliminarProducto2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LEliminarProducto2MousePressed(evt);
+            }
+        });
+        panelAdmin.add(LEliminarProducto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 170, -1));
+
+        LEliminarUsuario1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        LEliminarUsuario1.setForeground(new java.awt.Color(255, 255, 255));
+        LEliminarUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LEliminarUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_add_30px_1.png"))); // NOI18N
+        LEliminarUsuario1.setText("AGREGAR USUARIO");
+        LEliminarUsuario1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LEliminarUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LEliminarUsuario1MousePressed(evt);
+            }
+        });
+        panelAdmin.add(LEliminarUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 170, -1));
+
+        backGround.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, 550));
 
         content.setBackground(new java.awt.Color(236, 239, 244));
 
@@ -212,17 +291,105 @@ Usuario user;
             .addGap(0, 550, Short.MAX_VALUE)
         );
 
-        jPanel1.add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 750, 550));
+        backGround.add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 750, 550));
+
+        panelUsuario.setBackground(new java.awt.Color(34, 45, 49));
+        panelUsuario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LProducto1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LProducto1.setForeground(new java.awt.Color(255, 255, 255));
+        LProducto1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_box_40px.png"))); // NOI18N
+        LProducto1.setText("PRODUCTO");
+        LProducto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LProducto1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LProducto1MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, -1));
+
+        LCliente1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LCliente1.setForeground(new java.awt.Color(255, 255, 255));
+        LCliente1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_businessman_40px.png"))); // NOI18N
+        LCliente1.setText("CLIENTE");
+        LCliente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LCliente1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LCliente1MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, -1));
+
+        LUsuario1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LUsuario1.setForeground(new java.awt.Color(255, 255, 255));
+        LUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_user_40px.png"))); // NOI18N
+        LUsuario1.setText("USUARIO");
+        LUsuario1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LUsuario1MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 210, -1));
+
+        LMovimientos1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LMovimientos1.setForeground(new java.awt.Color(255, 255, 255));
+        LMovimientos1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LMovimientos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_shopping_cart_40px.png"))); // NOI18N
+        LMovimientos1.setText("MOVIMIENTOS");
+        LMovimientos1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LMovimientos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LMovimientos1MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LMovimientos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 210, -1));
+
+        LActualizarBD1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LActualizarBD1.setForeground(new java.awt.Color(255, 255, 255));
+        LActualizarBD1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LActualizarBD1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_cloud_backup_restore_40px.png"))); // NOI18N
+        LActualizarBD1.setText("ACTUALIZAR");
+        LActualizarBD1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LActualizarBD1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LActualizarBD1MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LActualizarBD1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 210, -1));
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Versión 1.0");
+        panelUsuario.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 528, -1, -1));
+
+        LReportes2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        LReportes2.setForeground(new java.awt.Color(255, 255, 255));
+        LReportes2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LReportes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FrmIconosNuevos/icons8_pdf_40px.png"))); // NOI18N
+        LReportes2.setText("REPORTES");
+        LReportes2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LReportes2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                LReportes2MousePressed(evt);
+            }
+        });
+        panelUsuario.add(LReportes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 210, -1));
+
+        backGround.add(panelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, 550));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setBounds(0, 0, 976, 659);
@@ -240,54 +407,105 @@ Usuario user;
     
     private void LProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LProductoMousePressed
         // TODO add your handling code here:
-        JProducto producto = new JProducto();
+        
         showPanel(producto);
         
         
     }//GEN-LAST:event_LProductoMousePressed
 
-    private void LDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LDashboardMousePressed
+    private void LVerUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LVerUsuarioMousePressed
         // TODO add your handling code here:
-        JDashboard db = new JDashboard();
-        showPanel(db);
-    }//GEN-LAST:event_LDashboardMousePressed
-
-    private void LMovimientosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LMovimientosMousePressed
-        // TODO add your handling code here:
-        JMovimiento mov = new JMovimiento(user);
-        showPanel(mov);
-        
-    }//GEN-LAST:event_LMovimientosMousePressed
+        showPanel(verUsuario);
+    }//GEN-LAST:event_LVerUsuarioMousePressed
 
     private void LClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LClienteMousePressed
         // TODO add your handling code here:
-        JCliente cliente = new JCliente();
+        
         showPanel(cliente);
     }//GEN-LAST:event_LClienteMousePressed
 
     private void LUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LUsuarioMousePressed
         // TODO add your handling code here:
-        JUsuario usuario = new JUsuario();
-        showPanel(usuario);
+        showPanel(infoUser);
     }//GEN-LAST:event_LUsuarioMousePressed
 
     private void LActualizarBDMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LActualizarBDMousePressed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, listaP.actualizarBD(),"Inventario",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(this, listaE.actualizarBD(),"Entrada",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(this, listaS.actualizarBD(),"Salida",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(this, listaC.actualizarBD(),"Clientes",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(this, listaU.actualizarBD(),"Usuarios",JOptionPane.INFORMATION_MESSAGE);
+        String msm = listaP.actualizarBD()+"\n";
+        msm += listaE.actualizarBD()+"\n";
+        msm += listaS.actualizarBD()+"\n";
+        msm += listaC.actualizarBD()+"\n";
+        msm += listaU.actualizarBD()+"\n";
+        JOptionPane.showMessageDialog(this, msm);
+        
         
        
     }//GEN-LAST:event_LActualizarBDMousePressed
 
     private void LReportes1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LReportes1MousePressed
         // TODO add your handling code here:
-        JReportes reporte = new JReportes();
+       
         showPanel(reporte);
         
     }//GEN-LAST:event_LReportes1MousePressed
+
+    private void LProducto1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LProducto1MousePressed
+        // TODO add your handling code here:
+        showPanel(producto);
+    }//GEN-LAST:event_LProducto1MousePressed
+
+    private void LCliente1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LCliente1MousePressed
+        // TODO add your handling code here:
+        showPanel(cliente);
+    }//GEN-LAST:event_LCliente1MousePressed
+
+    private void LUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LUsuario1MousePressed
+        // TODO add your handling code here:
+        
+        showPanel(infoUser);
+    }//GEN-LAST:event_LUsuario1MousePressed
+
+    private void LMovimientos1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LMovimientos1MousePressed
+        
+        showPanel(mov);
+        
+    }//GEN-LAST:event_LMovimientos1MousePressed
+
+    private void LActualizarBD1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LActualizarBD1MousePressed
+        // TODO add your handling code here:
+        String msm = listaP.actualizarBD()+"\n";
+        msm += listaE.actualizarBD()+"\n";
+        msm += listaS.actualizarBD()+"\n";
+        msm += listaC.actualizarBD()+"\n";
+        msm += listaU.actualizarBD()+"\n";
+        JOptionPane.showMessageDialog(this, msm);
+        
+    }//GEN-LAST:event_LActualizarBD1MousePressed
+
+    private void LReportes2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LReportes2MousePressed
+        // TODO add your handling code here:
+        showPanel(reporte);
+    }//GEN-LAST:event_LReportes2MousePressed
+
+    private void LEliminarMovMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LEliminarMovMousePressed
+        // TODO add your handling code here:
+        showPanel(eliminarMov);
+    }//GEN-LAST:event_LEliminarMovMousePressed
+
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        // TODO add your handling code here:
+        showPanel(mov);
+    }//GEN-LAST:event_jLabel4MousePressed
+
+    private void LEliminarUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LEliminarUsuario1MousePressed
+        // TODO add your handling code here:
+        showPanel(agregarUsuario);
+    }//GEN-LAST:event_LEliminarUsuario1MousePressed
+
+    private void LEliminarProducto2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LEliminarProducto2MousePressed
+        // TODO add your handling code here:
+        showPanel(eliminarCliente);
+    }//GEN-LAST:event_LEliminarProducto2MousePressed
 
     /**
      * @param args the command line arguments
@@ -327,20 +545,31 @@ Usuario user;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LActualizarBD;
+    private javax.swing.JLabel LActualizarBD1;
     private javax.swing.JLabel LCliente;
-    private javax.swing.JLabel LDashboard;
-    private javax.swing.JLabel LMovimientos;
+    private javax.swing.JLabel LCliente1;
+    private javax.swing.JLabel LEliminarMov;
+    private javax.swing.JLabel LEliminarProducto2;
+    private javax.swing.JLabel LEliminarUsuario1;
+    private javax.swing.JLabel LMovimientos1;
     private javax.swing.JLabel LProducto;
+    private javax.swing.JLabel LProducto1;
     private javax.swing.JLabel LReportes1;
+    private javax.swing.JLabel LReportes2;
     private javax.swing.JLabel LUsuario;
+    private javax.swing.JLabel LUsuario1;
+    private javax.swing.JLabel LVerUsuario;
     private javax.swing.JLabel TfUser;
+    private javax.swing.JPanel backGround;
     private javax.swing.JPanel content;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel panelAdmin;
+    private javax.swing.JPanel panelSuperior;
+    private javax.swing.JPanel panelUsuario;
     // End of variables declaration//GEN-END:variables
 }

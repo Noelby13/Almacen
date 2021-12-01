@@ -5,17 +5,35 @@
  */
 package formulario;
 
+import dao.DCliente;
+import dao.DEntrada;
+import dao.DProducto;
+import dao.DSalida;
+import dao.DUsuario;
+
 /**
  *
  * @author Noel
  */
 public class JDashboard extends javax.swing.JPanel {
-
+DProducto listaP;
+DEntrada listaE;
+DSalida listaS;
+DCliente listaC; 
+DUsuario listaU;
     /**
      * Creates new form JDashboard
      */
     public JDashboard() {
         initComponents();
+    }
+    public JDashboard(DCliente listaC, DUsuario listaU, DProducto listaP, DSalida listaS, DEntrada listaE) {
+        initComponents();
+        this.listaC=listaC;
+        this.listaE=listaE;
+        this.listaP =listaP;
+        this.listaS= listaS;
+        this.listaU = listaU;
     }
 
     /**

@@ -13,11 +13,12 @@ import javax.swing.JOptionPane;
  * @author Noel
  */
 public class JCliente extends javax.swing.JPanel {
-DCliente listaC =new DCliente();
+DCliente listaC;
     /**
      * Creates new form JCliente
      */
-    public JCliente() {
+    public JCliente(DCliente listaC) {
+        this.listaC=listaC;
         initComponents();
         TablaCliente.setModel(listaC.tablaClienteMovimiento());
         
@@ -183,11 +184,17 @@ DCliente listaC =new DCliente();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        listaC.agregarCliente(TfNombre.getText(), TfRuc.getText());
-        JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente");
-        TablaCliente.setModel(listaC.tablaClienteMovimiento());
-        TfNombre.setText("");
-        TfRuc.setText("");
+        
+        if(TfNombre.getText().isEmpty() || TfRuc.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Llenar todos los campos");
+        }else{
+              listaC.agregarCliente(TfNombre.getText(), TfRuc.getText());
+              JOptionPane.showMessageDialog(this, "Cliente guardado exitosamente");
+              TablaCliente.setModel(listaC.tablaClienteMovimiento());
+              TfNombre.setText("");
+              TfRuc.setText("");
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

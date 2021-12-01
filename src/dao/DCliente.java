@@ -63,8 +63,13 @@ public class DCliente {
         return result;
     }
     
-
     
+    /**
+     * Realiza busqueda de un cliente en el arraylist
+     * @param idUsuario
+     * @return cliente
+     */
+
     public Cliente obtenerCliente(int idUsuario){
         Cliente i= null;
         try{
@@ -80,6 +85,11 @@ public class DCliente {
         }
         return i;
     }
+    /**
+     * Retorna TableModel con la informacion de los clientes.
+     * @return DefaultTableModel
+     * 
+     */
     
     public DefaultTableModel tablaClienteMovimiento(){
         DefaultTableModel tblModelo = new DefaultTableModel();
@@ -111,7 +121,14 @@ public class DCliente {
         }
         return tblModelo;
     }
-    
+    /**
+     * agrega cliente
+     * @param nombre
+     * @param ruc
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int agregarCliente(String nombre, String ruc){
         int b=0;
         try{
@@ -127,6 +144,15 @@ public class DCliente {
         }
         return b;
     }
+    
+    /**
+     * edita cliente del arraylist
+     * @param nombre
+     * @param ruc
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     
     public int editarCliente(String nombre, String ruc){
         int b=0;
@@ -145,6 +171,14 @@ public class DCliente {
         return b;
     }
     
+    /**
+     * Elimina cliente 
+     * @param id
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
+    
     public int eliminarCliente(int id){
         int b=0;
         try{
@@ -159,7 +193,13 @@ public class DCliente {
         }
         return b;
     }
-    
+    /**
+     * Elimina un cliente de la base de datos.
+     * @param cliente
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int eliminarClienteBD(Cliente cliente){
         int result =0;
         try{
@@ -173,6 +213,14 @@ public class DCliente {
         }
         return result;
     }
+    
+    /**
+     * Agrega un cliente a la base de datos
+     * @param cliente
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     
     public int agregarClienteBD(Cliente cliente){
         int result =0;
@@ -189,6 +237,13 @@ public class DCliente {
         }
         return result;
     }
+    /**
+     * editar cliente en la base de datos 
+     * @param cliente
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
       
     public int editarClienteBD(Cliente cliente){
         int result =0;
@@ -206,9 +261,13 @@ public class DCliente {
         }
         return result;
     }
-       
+    /**
+    * Actualiza base de datos 
+    * @return String
+    * Retorna informacion de datos y errores actualizados.
+    */
      public String actualizarBD(){
-       String msn="";
+       String msn="----Clientes----\n";
        String msnError = "Errores en :";
        int nuevos = 0, modificados = 0, eliminados = 0;
        int errorNuevos = 0, errorModificados = 0, errorEliminados = 0;
@@ -242,18 +301,21 @@ public class DCliente {
                        errorNuevos++;
                        msnError +="\n Error al agregar"+cliente.getNombre();
                    }
+                   break;
                default:
                    msnError+="\n Revise el registro: "+ cliente.getNombre()
                            + " " + cliente.getRuc();
                    break;
            }
        }
-       msn = "Registros guardados: " + nuevos + "\nRegistros editados: "+ modificados+
-                "\nRegistros eliminados: " + eliminados;
+       msn += "Clients guardados: " + nuevos + "\nClientes editados: "+ modificados+
+                "\nClientes eliminados: " + eliminados;
        
-       if (!msnError.equals("Errores en: ")){
-            msn+="\n"+ msnError;
-        } 
+        if (msnError.equals("Errores en: ")){
+            msn+="\n";
+        }else{
+           msn+="\n"+ msnError;
+       }
        listaCliente = listarRegistro();
        return msn;
    }

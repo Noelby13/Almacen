@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Entrada {
     private int id;
-    private java.sql.Date Fecha;
+    private Date Fecha;
     private Producto producto;
     private int cantidad;
     private Usuario usuario;
@@ -22,7 +22,7 @@ public class Entrada {
     public Entrada() {
     }
 
-    public Entrada(int id, java.sql.Date Fecha, Producto producto, int cantidad,Usuario usuario, int estado) {
+    public Entrada(int id, Date Fecha, Producto producto, int cantidad,Usuario usuario, int estado) {
         this.id = id;
         this.Fecha = Fecha;
         this.producto = producto;
@@ -32,7 +32,7 @@ public class Entrada {
     }
 
 
-    public Entrada(java.sql.Date Fecha, Producto producto, int cantidad, Usuario usuario, int estado) {
+    public Entrada(Date Fecha, Producto producto, int cantidad, Usuario usuario, int estado) {
         this.Fecha = Fecha;
         this.producto = producto;
         this.cantidad = cantidad;
@@ -83,11 +83,11 @@ public class Entrada {
         this.estado = estado;
     }
 
-    public java.sql.Date getFecha() {
+    public Date getFecha() {
         return Fecha;
     }
 
-    public void setFecha(java.sql.Date Fecha) {
+    public void setFecha(Date Fecha) {
         this.Fecha = Fecha;
     }
     

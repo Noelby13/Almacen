@@ -82,6 +82,11 @@ public class DProducto {
         return result;
     }
     //metodo que manda producto a DEntrada para obtener producto a la hora de recuperarlo ala base de datos
+    /**Realiza busqueda de un producto en el arraylist 
+     * 
+     * @param codigoBarra
+     * @return Producto
+     */
     public Producto obtenerProducto(String codigoBarra){
         Producto i= null;
         try{
@@ -98,7 +103,11 @@ public class DProducto {
         return i;
     }
     
-    //tabla que manda al panel reporte cuando se seleciona inventario 
+    /**
+     * 
+     * @return DefaultTableModel
+     * Tabla con la informacion de los productos.
+     */     
     public DefaultTableModel tablaInventario(){
         DefaultTableModel tblModelo = new DefaultTableModel();
           try{
@@ -134,8 +143,18 @@ public class DProducto {
     }
             
             
-    
-    
+    /**
+     * Agrega un producto
+     * @param codigoBarra
+     * @param nombre
+     * @param marca
+     * @param lote
+     * @param ubicacion
+     * @param cantidad
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     
     public int agregarProducto (String codigoBarra, String nombre, String marca, String lote, String ubicacion, int cantidad){
         int b = 0;
@@ -156,7 +175,18 @@ public class DProducto {
         }
         return b;
     }
-    
+    /**
+     * Edita un producto
+     * @param codigoBarra
+     * @param nombre
+     * @param marca
+     * @param lote
+     * @param ubicacion
+     * @param cantidad
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int editarProducto(String codigoBarra, String nombre, String marca, String lote, String ubicacion, int cantidad){
         int b=0;
         try{
@@ -177,7 +207,14 @@ public class DProducto {
         }
         return b;
     }
-    
+    /**
+     * Edita un producto
+     * @param producto
+     * @param cantidad
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int editarProducto(Producto producto,int cantidad){
         int b=0;
         int total =0;
@@ -196,7 +233,13 @@ public class DProducto {
         }
         return b;
     }
-    
+    /**
+     * Elimina un producto 
+     * @param codigoBarra
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int eliminarProducto(String codigoBarra){
         int b= 0;
         try{
@@ -214,7 +257,13 @@ public class DProducto {
         }
         return b;
     }
-    
+    /**
+     * Agrega un producto a la base de datos
+     * @param producto
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
    public int agregarProductoBD(Producto producto){
        int result=0;
        try{
@@ -232,6 +281,13 @@ public class DProducto {
        }
        return result;
    }
+   /**
+    * Edita un producto en la base de datos
+    * @param producto
+    * @return int
+    * 0 = error al agregar
+    *1= Exito al agregar
+    */
    
    public int editarProductoBD(Producto producto){
        int result =0;
@@ -250,7 +306,13 @@ public class DProducto {
        }
        return result;
    }
-   
+   /**
+    * Elimina un producto de la base de datos 
+    * @param producto
+    * @return int
+    * 0 = error al agregar
+    * 1= Exito al agregar
+    */
    public int eliminarProductoBD(Producto producto){
        int result = 0;
        try{
@@ -265,9 +327,13 @@ public class DProducto {
        return result;
        
    }
-   
+   /**
+    * Actualiza base de datos
+    * @return String
+    * retorna informacion sobre exito o errores durante la actualizacion 
+    */
    public String actualizarBD(){
-       String msn="";
+       String msn="----Inventario----\n";
        String msnError = "Errores en :";
        int nuevos = 0, modificados = 0, eliminados = 0;
        int errorNuevos = 0, errorModificados = 0, errorEliminados = 0;
@@ -301,18 +367,21 @@ public class DProducto {
                        errorNuevos++;
                        msnError +="\n Error al agregar"+producto.getNombre();
                    }
+                   break;
                default:
                    msnError+="\n Revise el registro: "+ producto.getNombre()
                            + " " + producto.getLote();
                    break;
            }
        }
-       msn = "Registros guardados: " + nuevos + "\nRegistros editados: "+ modificados+
-                "\nRegistros eliminados: " + eliminados;
+       msn += "Productos guardados: " + nuevos + "\nProductos editados: "+ modificados+
+                "\nProductos eliminados: " + eliminados;
        
-       if (!msnError.equals("Errores en: ")){
-            msn+="\n"+ msnError;
-        } 
+        if (msnError.equals("Errores en: ")){
+            msn+="\n";
+        }else{
+           msn+="\n"+ msnError;
+       }
        listaProducto = listarRegistro();
        return msn;
    }

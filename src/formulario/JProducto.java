@@ -6,24 +6,41 @@
 package formulario;
 
 
+import dao.DEntrada;
 import dao.DProducto;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelado.Producto;
+import modelado.Usuario;
 
 /**
  *
  * @author Noel
  */
 public class JProducto extends javax.swing.JPanel {
-    DProducto listaProducto = new DProducto();
+    DProducto listaProducto;
+    DEntrada listaEntrada;
+    Usuario user;
     Date Fecha = new Date();
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String formattedDate = simpleDateFormat.format(Fecha);
+    java.sql.Date fechaSql = java.sql.Date.valueOf(formattedDate);
 
     /**
      * Creates new form JProducto
      */
     public JProducto() {
         initComponents();
+    }
+    
+    public JProducto(DProducto listaProducto, DEntrada listaEntrada, Usuario user) {
+        initComponents();
+        this.listaProducto=listaProducto;
+        this.listaEntrada= listaEntrada;
+        this.user=user;
+        
     }
 
     /**
@@ -95,6 +112,7 @@ public class JProducto extends javax.swing.JPanel {
 
         TfMarca.setBackground(new java.awt.Color(236, 239, 244));
         TfMarca.setForeground(new java.awt.Color(0, 0, 0));
+        TfMarca.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TfMarca.setBorder(null);
         TfMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +126,7 @@ public class JProducto extends javax.swing.JPanel {
 
         TfCantidad.setBackground(new java.awt.Color(236, 239, 244));
         TfCantidad.setForeground(new java.awt.Color(0, 0, 0));
+        TfCantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TfCantidad.setBorder(null);
         TfCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,10 +144,12 @@ public class JProducto extends javax.swing.JPanel {
 
         TfLote.setBackground(new java.awt.Color(236, 239, 244));
         TfLote.setForeground(new java.awt.Color(0, 0, 0));
+        TfLote.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TfLote.setBorder(null);
 
         TfUbicacion.setBackground(new java.awt.Color(236, 239, 244));
         TfUbicacion.setForeground(new java.awt.Color(0, 0, 0));
+        TfUbicacion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TfUbicacion.setBorder(null);
         TfUbicacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,9 +206,9 @@ public class JProducto extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TfCodigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(58, 58, 58)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addContainerGap(381, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,24 +283,35 @@ public class JProducto extends javax.swing.JPanel {
         // TODO add your handling code here:
         String codigo, nombre, lote, ubicacion,marca;
         int cantidad;
+        //Verifica si todos los campos contienen informacion 
+        if(TfCodigoBarra.getText().isEmpty() || TfNombre.getText().isEmpty() 
+                || TfLote.getText().isEmpty() ||TfUbicacion.getText().isEmpty() 
+                || TfMarca.getText().isEmpty() || TfCantidad.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Por Favor rellenar todos los campos");
+        }else{
+            codigo = TfCodigoBarra.getText();
+            nombre = TfNombre.getText();
+            lote = TfLote.getText();
+            ubicacion = TfUbicacion.getText();
+            marca = TfMarca.getText();
+            cantidad= Integer.parseInt(TfCantidad.getText());
+
+            listaProducto.agregarProducto(codigo, nombre, marca, lote, ubicacion, cantidad);
+
+    //      
+            listaEntrada.agregarEntrada(fechaSql, new Producto (codigo, nombre, marca, lote, ubicacion, cantidad, 4), cantidad, user);
+            JOptionPane.showMessageDialog(this, "Producto guardado");
+
+            TfCodigoBarra.setText("");
+            TfNombre.setText("");
+            TfLote.setText("");
+            TfUbicacion.setText("");
+            TfMarca.setText("");
+            TfCantidad.setText("");
+
+        }
         
-        codigo = TfCodigoBarra.getText();
-        nombre = TfNombre.getText();
-        lote = TfLote.getText();
-        ubicacion = TfUbicacion.getText();
-        marca = TfMarca.getText();
-        cantidad= Integer.parseInt(TfCantidad.getText());
-        
-        listaProducto.agregarProducto(codigo, nombre, marca, lote, ubicacion, cantidad);
-        
-        JOptionPane.showMessageDialog(this, "Producto guardado");
-         
-        TfCodigoBarra.setText("");
-        TfNombre.setText("");
-        TfLote.setText("");
-        TfUbicacion.setText("");
-        TfMarca.setText("");
-        TfCantidad.setText("");
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

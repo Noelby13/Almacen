@@ -26,7 +26,10 @@ DSalida salida = new DSalida ();
     /**
      * Creates new form JReportes
      */
-    public JReportes() {
+    public JReportes(DProducto producto,DEntrada entrada, DSalida salida) {
+        this.producto= producto;
+        this.entrada=entrada;
+        this.salida= salida;
         initComponents();
         
     }
@@ -127,29 +130,29 @@ DSalida salida = new DSalida ();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-//        String eleccion = comboReporte.getSelectedItem().toString();
-//        
-//        if (eleccion.equalsIgnoreCase("Inventario")){
-//            tablaProducto.setModel(producto.tablaInventario());
-//        }else if(eleccion.equalsIgnoreCase("Entradas")){
-//            tablaProducto.setModel(entrada.tablaEntrada());
-//        }else if(eleccion.equalsIgnoreCase("Salidas")){
-//            tablaProducto.setModel(salida.tablaSalida());
-//        }else{
-//           JOptionPane.showMessageDialog(this, "No deberias de ver esto");
-//        }
+        String eleccion = comboReporte.getSelectedItem().toString();
+        
+        if (eleccion.equalsIgnoreCase("Inventario")){
+            tablaProducto.setModel(producto.tablaInventario());
+        }else if(eleccion.equalsIgnoreCase("Entradas")){
+            tablaProducto.setModel(entrada.tablaEntrada());
+        }else if(eleccion.equalsIgnoreCase("Salidas")){
+            tablaProducto.setModel(salida.tablaSalida());
+        }else{
+           JOptionPane.showMessageDialog(this, "No deberias de ver esto");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboReporteActionPerformed
         // TODO add your handling code here:
-        if(comboReporte.getSelectedItem().toString().equals("Inventario")){
-            tablaProducto.setModel(producto.tablaInventario());
-        }else if(comboReporte.getSelectedItem().toString().equals("Entradas")){
-            tablaProducto.setModel(entrada.tablaEntrada());
-        }else{
-            tablaProducto.setModel(salida.tablaSalida());
-        }
-  
+//        if(comboReporte.getSelectedItem().toString().equals("Inventario")){
+//            tablaProducto.setModel(producto.tablaInventario());
+//        }else if(comboReporte.getSelectedItem().toString().equals("Entradas")){
+//            tablaProducto.setModel(entrada.tablaEntrada());
+//        }else{
+//            tablaProducto.setModel(salida.tablaSalida());
+//        }
+//  
     }//GEN-LAST:event_comboReporteActionPerformed
 
 

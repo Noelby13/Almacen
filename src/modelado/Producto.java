@@ -31,6 +31,7 @@ public class Producto {
         this.estado = estado;
     }
     
+    
     public int getEstado() {
         return estado;
     }

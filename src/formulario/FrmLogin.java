@@ -6,6 +6,8 @@
 package formulario;
 
 import dao.DUsuario;
+import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +21,7 @@ DUsuario listaU = new DUsuario ();
      */
     public FrmLogin() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -118,6 +121,14 @@ DUsuario listaU = new DUsuario ();
                 TfContraseñaActionPerformed(evt);
             }
         });
+        TfContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TfContraseñaKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TfContraseñaKeyPressed(evt);
+            }
+        });
         Background.add(TfContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 400, 30));
         Background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 400, 20));
 
@@ -202,7 +213,10 @@ DUsuario listaU = new DUsuario ();
     }//GEN-LAST:event_TfUsuarioActionPerformed
 
     private void TfContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfContraseñaActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:}
+         
+            
+        
     }//GEN-LAST:event_TfContraseñaActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -210,28 +224,60 @@ DUsuario listaU = new DUsuario ();
         System.exit(0);
     }//GEN-LAST:event_jLabel8MouseClicked
 
+    private void iniciarSesion(String nombreUsuario, String pw){
+        
+        try{
+            if(listaU.autenticarUsuario(nombreUsuario, pw)==1){
+                FrmPrincipal p = new FrmPrincipal(listaU.obtenerUsuario(nombreUsuario));
+                p.setVisible(true);
+                this.dispose();
+                
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos");
+            }
+        }catch(HeadlessException ex){
+            System.out.println(ex.toString());
+        }
+        
+        
+    }
+    
+    
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
         String nombreUsuario = TfUsuario.getText();
         String pass = new String(TfContraseña.getPassword());
-       int respuesta = listaU.autenticarUsuario(nombreUsuario, pass);
-        System.out.println(respuesta);
-        if(listaU.autenticarUsuario(nombreUsuario, pass)==1){
-            FrmPrincipal  p = new FrmPrincipal(listaU.obtenerUsuarioUsername(nombreUsuario));
-            p.setVisible(true);
-            this.dispose();
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "Datos incorrectos");
+        this.iniciarSesion(nombreUsuario, pass);
+//       int respuesta = listaU.autenticarUsuario(nombreUsuario, pass);
+//        System.out.println(respuesta);
+//        if(listaU.autenticarUsuario(nombreUsuario, pass)==1){
+//            FrmPrincipal  p = new FrmPrincipal(listaU.obtenerUsuarioUsername(nombreUsuario));
+//            p.setVisible(true);
+//            this.dispose();
+//            
+//        }else{
+//            JOptionPane.showMessageDialog(this, "Datos incorrectos");
+//        }
+//        
+        
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void TfContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TfContraseñaKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_TfContraseñaKeyPressed
+
+    private void TfContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TfContraseñaKeyTyped
+        // TODO add your handling code here:
+        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
+            String nombreUsuario = TfUsuario.getText();
+            String pass = new String(TfContraseña.getPassword());
+            this.iniciarSesion(nombreUsuario, pass);
         }
         
-        
-        
-
-
-
-
-    }//GEN-LAST:event_jLabel7MouseClicked
+            
+    }//GEN-LAST:event_TfContraseñaKeyTyped
 
     /**
      * @param args the command line arguments

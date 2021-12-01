@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import modelado.Usuario;
 
 /**
@@ -72,6 +73,15 @@ public class DUsuario {
         }
         return result;
     }
+    /**
+     * 
+     * @param username
+     * @param contraseña
+     * @return int
+     * 0 = contraseña/usuario incorrecto/ no existe usuario
+     * 1= usuario y contraseña correcta.
+     */
+    
     public int autenticarUsuario(String username, String contraseña){
         int b=0;
         try{
@@ -88,18 +98,11 @@ public class DUsuario {
         }
         return b;
 }
-    public String informacionUsuario (){
-        String msm="----USUARIOS---";
-        for(Usuario i:listaUsuario){
-            msm+=i.getId()+"\n";
-            msm+=i.getNombre()+"\n";
-            msm+=i.getNombreUsuario()+"\n";
-            msm+=i.getContraseña()+"\n";
-        }
-        
-        return msm;
-    }
-    
+    /**
+     * Retorna un usuario segun id usuario.
+     * @param usuario
+     * @return Usuario
+     */
     public Usuario obtenerUsuario(int usuario){
         Usuario i= null;
         try{
@@ -115,8 +118,12 @@ public class DUsuario {
         }
         return i;
     }
-    
-    public Usuario obtenerUsuarioUsername(String username){
+    /**
+     * Retorna un Usuario
+     * @param username
+     * @return Usuario
+     */
+    public Usuario obtenerUsuario(String username){
         Usuario i= null;
         try{
             for(Usuario u: listaUsuario){
@@ -131,9 +138,56 @@ public class DUsuario {
         }
         return i;
     }
+    /**
+     * Retorna DefaultTableModel con la informacion de los Usuarios.
+     * @return  DefaultTableModel
+     * 
+     */
     
-    
-    
+    public DefaultTableModel tablaUsuario(){
+        DefaultTableModel tblModelo = new DefaultTableModel();
+          try{
+            String titulo [] ={
+                "id",
+                "Nombre",
+                "Usuario",
+                "Contraseña",
+                "Rol"
+              
+            };
+            tblModelo.setColumnIdentifiers(titulo);
+            
+            Object datos [] = new Object[5];
+            
+            for(Usuario i: listaUsuario){
+              
+                  
+                  datos[0]= i.getId();
+                  datos[1]= i.getNombre();
+                  datos[2]= i.getNombreUsuario();
+                  datos[3]= i.getContraseña();
+                  datos[4]= i.getPrivilegio();
+                  
+                  tblModelo.addRow(datos);
+              
+                
+            }
+  
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return tblModelo;
+    }
+    /**
+     * Agrega usuario al ArrayList
+     * @param nombre
+     * @param nombreUsuario
+     * @param contraseña
+     * @param privilegio
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int agregarUsuario(String nombre, String nombreUsuario, String contraseña, String privilegio){
         int b=0;
         try{
@@ -151,6 +205,16 @@ public class DUsuario {
         }
         return b;
     }
+    /**
+     * Edita un usuario
+     * @param nombre
+     * @param nombreUsuario
+     * @param contraseña
+     * @param privilegio
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     
       public int editarUsuario(String nombre, String nombreUsuario, String contraseña, String privilegio){
         int b=0;
@@ -171,8 +235,15 @@ public class DUsuario {
         }
         return b;
     }
-    
-      public int eliminarUsuario(int id){
+      
+    /**
+     * Elimina un usuario
+     * @param id
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
+    public int eliminarUsuario(int id){
         int b=0;
         try{
             for(Usuario i : listaUsuario){
@@ -186,7 +257,13 @@ public class DUsuario {
         }
         return b;
     }
-      
+    /**
+     * agregar usuario base de datos
+     * @param usuario
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */  
     public int agregarUsuarioBD(Usuario usuario){
         int result =0;
         try{
@@ -203,7 +280,13 @@ public class DUsuario {
         }
         return result;
     }
-    
+    /**
+     * Elimina un usuario de la base de datos 
+     * @param usuario
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int eliminarUsuarioBD(Usuario usuario){
         int result =0;
         try{
@@ -217,7 +300,13 @@ public class DUsuario {
         }
         return result;
     }
-    
+    /**
+     * edita un usuario en la base de datos 
+     * @param usuario
+     * @return int
+     * 0 = error al agregar
+     * 1= Exito al agregar
+     */
     public int editarUsuarioBD(Usuario usuario){
         int result =0;
         try{
@@ -235,9 +324,13 @@ public class DUsuario {
         }
         return result;
     }
-    
-       public String actualizarBD(){
-       String msn="";
+    /**
+     * Actualiza BD
+     * @return String
+     * Informacion sobre exito o errores en la actualizacion
+     */
+    public String actualizarBD(){
+       String msn="----Usuarios----\n";
        String msnError = "Errores en :";
        int nuevos = 0, modificados = 0, eliminados = 0;
        int errorNuevos = 0, errorModificados = 0, errorEliminados = 0;
@@ -271,17 +364,20 @@ public class DUsuario {
                        errorNuevos++;
                        msnError +="\n Error al agregar"+usuario.getNombreUsuario();
                    }
+                   break;
                default:
                    msnError+="\n Revise el registro: "+ usuario.getNombreUsuario();
                    break;
            }
        }
-       msn = "Registros guardados: " + nuevos + "\nRegistros editados: "+ modificados+
+       msn += "Registros guardados: " + nuevos + "\nRegistros editados: "+ modificados+
                 "\nRegistros eliminados: " + eliminados;
        
-       if (!msnError.equals("Errores en: ")){
-            msn+="\n"+ msnError;
-        } 
+        if (msnError.equals("Errores en: ")){
+            msn+="\n";
+        }else{
+           msn+="\n"+ msnError;
+       }
        listaUsuario = listarRegistro();
        return msn;
        

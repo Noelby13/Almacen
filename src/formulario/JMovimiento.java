@@ -23,10 +23,14 @@ import modelado.Usuario;
  * @author Noel
  */
 public class JMovimiento extends javax.swing.JPanel {
-DProducto listaP = new DProducto();
-DEntrada listaE =new DEntrada();
-DSalida listaS = new DSalida();
-DCliente listaC = new DCliente();
+//DProducto listaP = new DProducto();
+//DEntrada listaE =new DEntrada();
+//DSalida listaS = new DSalida();
+//DCliente listaC = new DCliente();
+DProducto listaP;
+DEntrada listaE;
+DSalida listaS;
+DCliente listaC;        
 Date Fecha = new Date();
 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 String formattedDate = simpleDateFormat.format(Fecha);
@@ -36,11 +40,22 @@ Usuario user;
     /**
      * Creates new form JMovimiento
      */
-    public JMovimiento(Usuario user) {
+    public JMovimiento() {
+        initComponents();
+       
+    }
+    
+    public JMovimiento(Usuario user, DEntrada listaE, DSalida listaS, DProducto listaP, DCliente listaC) {
         initComponents();
         this.user=user;
+        this.listaE= listaE;
+        this.listaP=listaP;
+        this.listaS= listaS;
+        this.listaC=listaC;
         TfClienteP.setEnabled(false);
+        TfClienteP.setText("Entradas no requieren Proveedor");
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,7 +124,7 @@ Usuario user;
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Cliente:");
+        jLabel5.setText("ID Cliente:");
 
         TfClienteP.setBackground(new java.awt.Color(236, 239, 244));
         TfClienteP.setForeground(new java.awt.Color(0, 0, 0));
@@ -159,9 +174,9 @@ Usuario user;
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator3)
-                                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                                        .addComponent(TfCodigoMover, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                                        .addComponent(combomovimiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jSeparator1)
+                                        .addComponent(TfCodigoMover)
+                                        .addComponent(combomovimiento, 0, 307, Short.MAX_VALUE))
                                     .addComponent(TfClienteP, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -218,9 +233,7 @@ Usuario user;
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,39 +245,59 @@ Usuario user;
         // TODO add your handling code here:
         
         String codigo = TfCodigoMover.getText();
-//        int idCliente =Integer.parseInt(TfClienteP.getText());
         int cantidad = Integer.parseInt(TfCantidadMover.getText());
-        Producto p =listaP.obtenerProducto(codigo);
-//        Cliente c = listaC.obtenerCliente(idCliente);
-       
-        
         String eleccion = combomovimiento.getSelectedItem().toString();
+        Producto p =listaP.obtenerProducto(codigo);
         
-        if(eleccion.equalsIgnoreCase("Entrada")){
-            
-            listaP.editarProducto(p,cantidad);
-            listaE.agregarEntrada(fechaSql, p, cantidad, user);
-            
-            JOptionPane.showMessageDialog(this, "Entrada guardada exitosamente");
+        //verifica que el producto exista
+        if(p!=null){
+            if(eleccion.equalsIgnoreCase("Entrada")){
+                //verifica que cantidad a ingresar sea mayor que cero para evitar ingresar una entrada falsa
+                if(cantidad>0){
+                    listaP.editarProducto(p, cantidad);
+                    listaE.agregarEntrada(fechaSql, p, cantidad, user);
+                    JOptionPane.showMessageDialog(this, "Entrada exitosa");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Introduce una cantidad mayor que cero");
+                }
+                    
+                
+            }else{
+                //verifica cantidad a mover tiene que ser diferente de cero para no generar una salida falsa 
+                if(cantidad>0){
+                    //verifica si existe cantidad suficiente del producto a mover
+                    if(p.getCantidad()>=cantidad){
+                    int idCliente =Integer.parseInt(TfClienteP.getText());
+                    Cliente c = listaC.obtenerCliente(idCliente);
+                    //verifica si el cliente existe
+                        if(c!=null){
+                            listaS.agregarSalida(fechaSql, c, p, cantidad, user);
+                            cantidad = -cantidad;
+                            listaP.editarProducto(p, cantidad);
+                            JOptionPane.showMessageDialog(this, "Salida Exitosa");
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Cliente no existe");
+                            TfClienteP.setText("");
+                        }
+                }else{
+                    JOptionPane.showMessageDialog(this, "Producto insuficiente");
+                    TfCantidadMover.setText("");
+                }  
+                }else{
+                    JOptionPane.showMessageDialog(this, "Introduce una cantidad mayor que cero");
+                }
+         
+            }
+            TfCodigoMover.setText("");
+            TfCantidadMover.setText("");
+            TfClienteP.setText("");
         }else{
-            int idCliente =Integer.parseInt(TfClienteP.getText());
-            Cliente c = listaC.obtenerCliente(idCliente);
-            
-            listaS.agregarSalida(fechaSql, c, p, cantidad, user);
-            cantidad = -cantidad;
-            listaP.editarProducto(p, cantidad);
-            JOptionPane.showMessageDialog(this, "Salida Exitosa");
+            JOptionPane.showMessageDialog(this, "Producto no existe en el inventario");
+            TfCodigoMover.setText("");
+            TfCantidadMover.setText("");
+            TfClienteP.setText("");
         }
-       
-        
-        
-        
-        
-       
-        
-        
-      
-
+                       
             
     }//GEN-LAST:event_btnMoverActionPerformed
 
@@ -284,8 +317,10 @@ Usuario user;
         // TODO add your handling code here:
         if(combomovimiento.getSelectedItem().equals("Salida")){
             TfClienteP.setEnabled(true);
+            TfClienteP.setText("");
         }else{
             TfClienteP.setEnabled(false);
+            TfClienteP.setText("Entradas no requieren cliente/proveedor");
             
         }
     }//GEN-LAST:event_combomovimientoActionPerformed
